@@ -15,6 +15,7 @@ export const ASSETS = {
     wish: { label: 'Wish — Dreamy Synth', src: null },
     ending: { label: 'Ending — Emotional Crescendo', src: null },
     landing: { label: 'Landing — Anticipation', src: null },
+    cake: { label: 'Cake — Candlelight', src: null },
   },
   albumImages: {},
   secretImages: {},
@@ -75,6 +76,21 @@ export const LANDING = {
   birthdayMessage: 'May every wish you make today come true. May this year bring you more joy than your heart can hold. Thank you for simply existing — you make this world infinitely more beautiful. I love you, today and always.',
 
   ctaText: '🎉 Let\'s Celebrate!',
+
+  // ---- Cake / Birthday Candle ----
+  cakeAge: 23,
+  cakeMessages: [
+    'Another year older, another year more beautiful…',
+    'I am so grateful you were born into this world.',
+    'Every candle represents a wish I have for you.',
+    'Blow the candles and make a wish, my love.',
+  ],
+  cakeWishes: [
+    'May your heart always know how deeply you are loved.',
+    'May every day bring you closer to the life you dream of.',
+    'May you always find reasons to smile, even on hard days.',
+    'May you never forget how special you truly are.',
+  ],
 };
 
 // ============================================================

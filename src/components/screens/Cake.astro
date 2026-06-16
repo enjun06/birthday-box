@@ -1,0 +1,122 @@
+---
+import BackButton from '../shared/BackButton.astro';
+---
+
+<div id="screen-cake" class="screen">
+  <BackButton />
+  <div class="cake-glow" id="cake-glow"></div>
+
+  <!-- text above cake (appears after blow) -->
+  <div class="cake-top-text" id="cake-top-text"></div>
+
+  <!-- pre-blow typing text -->
+  <div class="cake-typing-area" id="cake-typing-area">
+    <div class="cake-typing type-target" id="cake-type-target"></div>
+  </div>
+
+  <!-- blow hint (appears after typing finishes) -->
+  <div class="cake-blow-hint" id="cake-blow-hint">✨ tap to blow the candles ✨</div>
+
+  <div class="cake-scene" id="cake-scene">
+    <canvas class="cake-wind-canvas" id="cake-wind-canvas"></canvas>
+
+    <div class="cake-container">
+      <svg viewBox="0 0 360 400" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="candleGlow" cx="50%" cy="35%" r="45%">
+            <stop offset="0%" stop-color="#ffe0a0" stop-opacity="0.6"/>
+            <stop offset="50%" stop-color="#ffb860" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#ff8a40" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="flameBlur"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+        <ellipse cx="180" cy="170" rx="150" ry="150" fill="url(#candleGlow)" id="cake-svg-glow"/>
+        <ellipse cx="180" cy="355" rx="135" ry="16" fill="#e8d5d5" stroke="#d4c0c0" stroke-width="1.5"/>
+        <rect x="55" y="255" width="250" height="100" rx="8" fill="#fce4ec"/>
+        <ellipse cx="180" cy="255" rx="125" ry="14" fill="#fdf0f4" stroke="#f0d0d8" stroke-width="1"/>
+        <path d="M55,280 Q75,305 95,280 Q115,310 135,280 Q155,305 175,280 Q195,310 215,280 Q235,305 255,280 Q275,310 295,280 L305,280 L305,255 L55,255 Z" fill="#fff" opacity="0.9"/>
+        <circle cx="100" cy="295" r="5" fill="#ff6b9d" opacity="0.5"/>
+        <circle cx="140" cy="315" r="5" fill="#c9a8e8" opacity="0.5"/>
+        <circle cx="180" cy="300" r="5" fill="#ff6b9d" opacity="0.5"/>
+        <circle cx="220" cy="320" r="5" fill="#c9a8e8" opacity="0.5"/>
+        <circle cx="260" cy="295" r="5" fill="#ff6b9d" opacity="0.5"/>
+        <rect x="100" y="185" width="160" height="70" rx="6" fill="#fdf0f4"/>
+        <ellipse cx="180" cy="185" rx="80" ry="10" fill="#fff" stroke="#f0d0d8" stroke-width="1"/>
+        <path d="M100,210 Q115,235 130,210 Q150,240 165,210 Q180,235 195,210 Q210,240 230,210 Q245,235 260,210 L260,185 L100,185 Z" fill="#fff" opacity="0.9"/>
+        <ellipse cx="180" cy="180" rx="50" ry="6" fill="none" stroke="#fce4ec" stroke-width="3" stroke-dasharray="6,4"/>
+        <g transform="translate(144,120)" class="cake-candle">
+          <rect x="0" y="20" width="10" height="42" rx="3" fill="#ff8a6b"/>
+          <rect x="-3" y="17" width="16" height="7" rx="3" fill="#ffb08b"/>
+          <g class="candle-flame" id="flame-2"><ellipse cx="6" cy="-10" rx="8" ry="16" fill="#ffb860" opacity="0.4" filter="url(#flameBlur)"/><path d="M6,-22 Q12,-10 6,2 Q0,-10 6,-22Z" fill="#ffcc44"/><path d="M6,-19 Q10,-12 6,-2 Q2,-12 6,-19Z" fill="#fff8d0"/></g>
+        </g>
+        <g transform="translate(206,120)" class="cake-candle">
+          <rect x="0" y="20" width="10" height="42" rx="3" fill="#ff8a6b"/>
+          <rect x="-3" y="17" width="16" height="7" rx="3" fill="#ffb08b"/>
+          <g class="candle-flame" id="flame-3"><ellipse cx="6" cy="-10" rx="8" ry="16" fill="#ffb860" opacity="0.4" filter="url(#flameBlur)"/><path d="M6,-22 Q12,-10 6,2 Q0,-10 6,-22Z" fill="#ffcc44"/><path d="M6,-19 Q10,-12 6,-2 Q2,-12 6,-19Z" fill="#fff8d0"/></g>
+        </g>
+        <rect x="130" y="85" width="100" height="60" fill="transparent" id="cake-flame-hitbox" style="cursor:pointer"/>
+      </svg>
+    </div>
+
+    <div class="blow-character" id="blow-character"><span>😗</span><span class="blow-wind" id="blow-wind">💨</span></div>
+  </div>
+
+  <!-- quotes below cake (appears after blow) -->
+  <div class="cake-quotes-area" id="cake-quotes-area">
+    <div class="cake-quotes-inner" id="cake-quotes-inner"></div>
+  </div>
+</div>
+
+<style>
+#screen-cake { background: radial-gradient(ellipse at 50% 50%, #1a1020 0%, #0d0612 70%, #05020a 100%); padding: 0; display: flex; flex-direction: column; align-items: center; overflow-y: auto; }
+#screen-cake .btn-back { color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); }
+
+.cake-glow { position: fixed; inset: 0; pointer-events: none; z-index: 2; background: radial-gradient(ellipse at 50% 42%, rgba(255,180,100,0.3) 0%, rgba(255,140,60,0.1) 35%, transparent 70%); transition: opacity 1.2s ease-out; }
+.cake-glow.out { opacity: 0; }
+
+/* happy birthday above cake */
+.cake-top-text { opacity: 0; transform: translateY(-12px); font-family: var(--font); font-size: clamp(20px,4.5vw,30px); font-weight: 700; color: #fff; text-align: center; padding: 16px 24px 8px; z-index: 5; position: relative; }
+
+/* pre-blow typing text */
+.cake-typing-area { position: relative; z-index: 5; text-align: left; width: 100%; max-width: 380px; padding: 64px 24px 0; }
+.cake-typing { font-family: var(--font); font-size: clamp(14px,2.5vw,18px); font-weight: 500; color: rgba(255,255,255,0.7); line-height: 1.7; min-height: 40px; }
+.cake-typing .char { display: inline; opacity: 0; }
+.cake-typing .char.show { opacity: 1; }
+
+/* blow hint */
+.cake-blow-hint { position: relative; z-index: 5; font-family: var(--font-hand); font-size: clamp(16px,3vw,22px); color: rgba(255,200,150,0.5); text-align: center; padding: 4px 24px 0; opacity: 0; transition: opacity 0.8s ease, transform 0.8s ease; transform: translateY(8px); cursor: pointer; }
+.cake-blow-hint.show { opacity: 1; transform: translateY(0); }
+.cake-blow-hint:hover { color: rgba(255,200,150,0.8); }
+
+.cake-scene { flex-shrink: 0; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 0 16px; z-index: 3; position: relative; }
+.cake-wind-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 6; }
+.cake-container { width: 100%; max-width: 320px; padding: 0 16px; position: relative; }
+#cake-flame-hitbox { pointer-events: none; }
+#cake-flame-hitbox.enabled { pointer-events: auto; }
+
+.candle-flame { animation: flameFlicker 0.15s ease-in-out infinite alternate; transform-origin: 6px 0; }
+.candle-flame.out { opacity: 0; transition: opacity 0.6s ease-out; animation: none; }
+#flame-2 { animation-delay: 0s; }
+#flame-3 { animation-delay: 0.05s; }
+@keyframes flameFlicker {
+  0% { transform: scale(1,1) rotate(-1deg); }
+  25% { transform: scale(0.9,1.08) rotate(1deg); }
+  50% { transform: scale(1.06,0.9) rotate(-0.5deg); }
+  75% { transform: scale(0.86,1.06) rotate(1.5deg); }
+  100% { transform: scale(1,1) rotate(-1deg); }
+}
+
+.blow-character { position: absolute; top: 20%; left: 50%; transform: translate(-50%,-50%); z-index: 10; display: flex; align-items: center; gap: 4px; opacity: 0; pointer-events: none; font-size: 48px; }
+.blow-character.show { opacity: 1; }
+.blow-wind { font-size: 28px; opacity: 0; }
+.blow-wind.blow { opacity: 1; }
+
+/* quotes below cake */
+.cake-quotes-area { display: none; flex-direction: column; align-items: flex-start; padding: 0 24px 60px; width: 100%; max-width: 380px; z-index: 5; }
+.cake-quotes-area.show { display: flex; }
+.cake-quotes-inner { display: flex; flex-direction: column; gap: 18px; }
+.cake-quotes-inner .cq-item { font-family: var(--font); font-size: clamp(18px,3.5vw,24px); font-weight: 600; color: #fff; line-height: 1.75; text-align: left; }
+.cake-quotes-inner .cq-item .char { display: inline; opacity: 0; text-shadow: 0 0 18px rgba(255,180,130,0.5), 0 0 40px rgba(255,130,160,0.25), 0 0 80px rgba(255,200,230,0.1); }
+.cake-quotes-inner .cq-item .char.show { opacity: 1; animation: textGlow 2.5s ease-in-out infinite alternate; }
+@keyframes textGlow { 0% { text-shadow: 0 0 18px rgba(255,180,130,0.4), 0 0 40px rgba(255,130,160,0.2), 0 0 80px rgba(255,200,230,0.08); } 100% { text-shadow: 0 0 28px rgba(255,180,130,0.6), 0 0 55px rgba(255,130,160,0.35), 0 0 100px rgba(255,200,230,0.15); } }
+</style>

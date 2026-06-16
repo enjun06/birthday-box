@@ -237,6 +237,7 @@ function showScreen(id, animate) {
   if (id === 'surprise') initSurpriseBox();
   if (id === 'daily') initDailyNotes();
   if (id === 'wish') initWishWall();
+  if (id === 'cake') initCake();
 }
 
 // ============================================================
@@ -598,6 +599,7 @@ function navigateTo(section) {
   if (section === 'menu') { showScreen('menu'); return; }
   if (section === 'ending') { showEnding(); return; }
   if (section === 'replay') { replayLanding(); return; }
+  if (section === 'cake') { showScreen('cake'); return; }
   const map = { stories: 'stories', album: 'album', journey: 'journey', postcard: 'postcard', secret: 'secret', surprise: 'surprise', daily: 'daily', wish: 'wish' };
   const id = map[section];
   if (!id) return;
@@ -931,6 +933,147 @@ function initScratch() {
   const gp = function (e) { const r = c.getBoundingClientRect(); return { x: (e.touches?e.touches[0].clientX:e.clientX)-r.left, y: (e.touches?e.touches[0].clientY:e.clientY)-r.top }; };
   const sc = function (pos) { if (!scratchCtx) return; scratchCtx.globalCompositeOperation = 'destination-out'; scratchCtx.beginPath(); scratchCtx.arc(pos.x, pos.y, 22, 0, Math.PI*2); scratchCtx.fill(); scratchCtx.globalCompositeOperation = 'source-over'; const id = scratchCtx.getImageData(0, 0, scratchW, scratchH); let tr = 0; for (let i = 3; i < id.data.length; i += 4) { if (id.data[i] < 128) tr++; } const pct = Math.round((tr/(id.data.length/4))*100); scratchPercent = pct; pr.textContent = pct+'% revealed'; if (pct > 0 && pct % 10 === 0) { gsap.fromTo(pr, { scale: 1.2 }, { scale: 1, duration: 0.3, ease: 'back.out(2)' }); } if (pct >= 70 && !scratchRevealed) { scratchRevealed = true; document.getElementById('scratch-reveal').classList.add('show'); launchConfetti(100,{spread:360,origin:{x:0.5,y:0.5}});launchConfetti(80,{spread:180,origin:{x:0.3,y:0.4}});launchConfetti(80,{spread:180,origin:{x:0.7,y:0.4}});setTimeout(()=>{showEnding();},2000); } };
   c.onpointerdown = function (e) { isScratching = true; sc(gp(e)); }; c.onpointermove = function (e) { if (isScratching) sc(gp(e)); }; c.onpointerup = function () { isScratching = false; }; c.onpointercancel = function () { isScratching = false; };
+}
+
+// ============================================================
+// BIRTHDAY CAKE
+// ============================================================
+let cakeInit = false;
+
+function initCake() {
+  if (cakeInit) return;
+  cakeInit = true;
+
+  let cakePhase = 'typing';
+  let cakeMsgIdx = 0;
+
+  const msgs = LANDING.cakeMessages;
+  const wishes = LANDING.cakeWishes;
+
+  // Phase 1: typing
+  const typeTarget = document.getElementById('cake-type-target');
+  const typeNext = () => {
+    if (cakePhase !== 'typing') return;
+    typeText(typeTarget, msgs[cakeMsgIdx % msgs.length]);
+    cakeMsgIdx++;
+    // after showing all messages once, show blow hint
+    if (cakeMsgIdx >= msgs.length) {
+      setTimeout(() => showBlowHint(), 2000);
+      return;
+    }
+    setTimeout(typeNext, 6000);
+  };
+  typeNext();
+
+  const hitbox = document.getElementById('cake-flame-hitbox');
+  const blowChar = document.getElementById('blow-character');
+  const blowWind = document.getElementById('blow-wind');
+  const blowHint = document.getElementById('cake-blow-hint');
+
+  function showBlowHint() {
+    if (cakePhase !== 'typing') return;
+    cakePhase = 'ready';
+    blowHint.classList.add('show');
+    hitbox.classList.add('enabled');
+
+    // click on either hint text or candle hitbox triggers blow
+    const doBlow = () => startBlow();
+    blowHint.onclick = doBlow;
+    hitbox.onclick = doBlow;
+  }
+
+  function startBlow() {
+    if (cakePhase !== 'ready') return;
+    cakePhase = 'blowing';
+    blowHint.classList.remove('show');
+
+    blowChar.classList.add('show');
+    gsap.fromTo(blowChar, { scale: 0.5 }, { scale: 1, duration: 0.4, ease: 'back.out(2)' });
+
+    setTimeout(() => { blowWind.classList.add('blow'); drawWind(); }, 400);
+
+    setTimeout(() => {
+      document.getElementById('flame-2').classList.add('out');
+      document.getElementById('flame-3').classList.add('out');
+      document.getElementById('cake-glow').classList.add('out');
+      blowWind.classList.remove('blow');
+      blowChar.classList.remove('show');
+      gsap.to('#cake-typing-area', { opacity: 0, duration: 0.4 });
+      setTimeout(startCakeCelebrate, 800);
+    }, 1000);
+  }
+}
+
+function drawWind() {
+  const canvas = document.getElementById('cake-wind-canvas');
+  if (!canvas) return;
+  const ctxWind = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  const h = canvas.height, w = canvas.width;
+  let frame = 0;
+
+  const anim = () => {
+    if (frame > 20) { ctxWind.clearRect(0, 0, w, h); return; }
+    ctxWind.clearRect(0, 0, w, h);
+    ctxWind.globalAlpha = 0.4 - frame * 0.02;
+    for (let i = 0; i < 6; i++) {
+      const x = 40 + i * 20 + frame * 6;
+      const y = h * 0.35 + Math.sin(i + frame * 0.5) * 15;
+      ctxWind.beginPath();
+      ctxWind.arc(x, y, 2 + Math.random() * 2, 0, Math.PI * 2);
+      ctxWind.fillStyle = '#fff';
+      ctxWind.fill();
+    }
+    frame++;
+    requestAnimationFrame(anim);
+  };
+  anim();
+}
+
+function startCakeCelebrate() {
+  const name = LANDING.recipientName;
+
+  // 1. dramatic reveal of "Happy Birthday" above cake
+  const topText = document.getElementById('cake-top-text');
+  topText.textContent = 'Happy Birthday, ' + name + '! 🎂';
+
+  // confetti burst
+  launchConfetti(120, { spread: 360, origin: { x: 0.5, y: 0.4 } });
+  launchConfetti(80, { spread: 180, origin: { x: 0.3, y: 0.35 } });
+  launchConfetti(80, { spread: 180, origin: { x: 0.7, y: 0.35 } });
+
+  // cinematic stagger: scale up from small + blur + slide
+  gsap.fromTo(topText, { opacity: 0, y: 30, scale: 0.65, filter: 'blur(6px)' }, {
+    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 1.2, ease: 'back.out(1.7)',
+    onComplete: () => {
+      // subtle glow pulse after reveal
+      gsap.to(topText, { textShadow: '0 0 40px rgba(255,200,150,0.3)', duration: 0.6, yoyo: true, repeat: 1 });
+    }
+  });
+
+  // 2. quotes below cake with typing animation
+  const quotesArea = document.getElementById('cake-quotes-area');
+  const quotesInner = document.getElementById('cake-quotes-inner');
+  quotesInner.innerHTML = '';
+
+  LANDING.cakeWishes.forEach((w, i) => {
+    const el = document.createElement('div');
+    el.className = 'cq-item';
+    el.textContent = '';
+    quotesInner.appendChild(el);
+    // type each quote with staggered delay
+    setTimeout(() => {
+      typeText(el, w);
+    }, 1200 + i * 1500);
+  });
+
+  setTimeout(() => {
+    quotesArea.classList.add('show');
+    setTimeout(() => {
+      document.getElementById('screen-cake').scrollTo({ top: document.getElementById('screen-cake').scrollHeight, behavior: 'smooth' });
+    }, 200);
+  }, 400);
 }
 
 // ============================================================
