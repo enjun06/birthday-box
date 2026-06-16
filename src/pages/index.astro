@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Menu from '../components/screens/Menu.astro';
+import Stories from '../components/screens/Stories.astro';
+import Album from '../components/screens/Album.astro';
+import Journey from '../components/screens/Journey.astro';
+import Postcard from '../components/screens/Postcard.astro';
+import Secret from '../components/screens/Secret.astro';
+import SurpriseBox from '../components/screens/SurpriseBox.astro';
+import Daily from '../components/screens/Daily.astro';
+import Wish from '../components/screens/Wish.astro';
+import Ending from '../components/screens/Ending.astro';
+import MusicPlayer from '../components/shared/MusicPlayer.astro';
+import ChatBubble from '../components/shared/ChatBubble.astro';
+import SurpriseOverlay from '../components/shared/SurpriseOverlay.astro';
+import ConfettiCanvas from '../components/shared/ConfettiCanvas.astro';
+---
+
+<BaseLayout>
+  <!-- animated background -->
+  <div class="bg-anim"></div>
+
+  <!-- floating particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- floating shapes -->
+  <div class="float-shape" style="top:10%;left:5%;animation-delay:0s;">✦</div>
+  <div class="float-shape" style="top:25%;right:10%;animation-delay:3s;">♥</div>
+  <div class="float-shape" style="top:55%;left:8%;animation-delay:5s;">★</div>
+  <div class="float-shape" style="top:75%;right:6%;animation-delay:2s;">✿</div>
+  <div class="float-shape" style="top:40%;left:15%;animation-delay:7s;">♡</div>
+  <div class="float-shape" style="top:88%;left:20%;animation-delay:4s;">✧</div>
+
+  <ChatBubble />
+  <MusicPlayer />
+  <SurpriseOverlay />
+  <ConfettiCanvas />
+
+  <Menu />
+  <Stories />
+  <Album />
+  <Journey />
+  <Postcard />
+  <Secret />
+  <SurpriseBox />
+  <Daily />
+  <Wish />
+  <Ending />
+
+  <script src="/src/scripts/main.js"></script>
+</BaseLayout>

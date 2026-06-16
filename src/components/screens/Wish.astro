@@ -1,0 +1,16 @@
+---
+import BackButton from '../shared/BackButton.astro';
+---
+
+<div id="screen-wish" class="screen">
+  <BackButton />
+  <div class="section-title">✦ Wish Wall ✦</div>
+  <div class="section-sub">what do you wish for?</div>
+  <div class="wish-wall-container">
+    <div class="wish-input-area">
+      <input type="text" id="wishInput" placeholder="Write your birthday wish…" maxlength="120" />
+      <button id="wishSubmit">✨ Wish</button>
+    </div>
+    <div class="wish-list" id="wishList"></div>
+  </div>
+</div>

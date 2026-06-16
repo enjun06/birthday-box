@@ -1,0 +1,16 @@
+---
+import BackButton from '../shared/BackButton.astro';
+---
+
+<div id="screen-journey" class="screen">
+  <BackButton />
+  <div class="section-title">✦ Journey ✦</div>
+  <div class="section-sub">our story, one step at a time</div>
+  <div class="journey-board">
+    <div class="journey-nav">
+      <button id="journey-prev" disabled>← Back</button>
+      <button id="journey-next">Next Step →</button>
+    </div>
+    <div class="journey-path" id="journey-path"></div>
+  </div>
+</div>
