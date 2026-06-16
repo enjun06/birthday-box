@@ -1,13 +1,8 @@
 // ============================================================
 // CONTENT & ASSET CONFIGURATION
-// Each module has its own asset config so you can manually
-// set music, images, and videos per module.
 // ============================================================
 
 export const ASSETS = {
-  // ---- MUSIC ----
-  // Set the audio file path per module (relative to public/)
-  // Set to null or '' to use label-only (no audio)
   music: {
     menu: { label: 'Menu Theme — Lofi Piano', src: null },
     stories: { label: 'Stories — Soft Strings', src: null },
@@ -19,24 +14,67 @@ export const ASSETS = {
     daily: { label: 'Daily — Gentle Harp', src: null },
     wish: { label: 'Wish — Dreamy Synth', src: null },
     ending: { label: 'Ending — Emotional Crescendo', src: null },
+    landing: { label: 'Landing — Anticipation', src: null },
   },
+  albumImages: {},
+  secretImages: {},
+  videos: {},
+};
 
-  // ---- IMAGES ----
-  // Album frames: set a real image path to override emoji placeholders
-  albumImages: {
-    // Example: '0': '/images/our-sunset.jpg',
-  },
+// ============================================================
+// LANDING SEQUENCE
+// ============================================================
+export const LANDING = {
+  // The recipient's name — change this before deploying
+  recipientName: 'Love',
 
-  // Secret gallery images
-  secretImages: {
-    // Example: '0': '/images/secret-photo-1.jpg',
-  },
+  // Countdown target (month is 0-indexed: 5 = June)
+  countdownTarget: (() => {
+    const now = new Date();
+    const year = now.getMonth() > 5 || (now.getMonth() === 5 && now.getDate() > 27) ? now.getFullYear() + 1 : now.getFullYear();
+    return new Date(year, 5, 27, 0, 0, 0);
+  })(),
 
-  // ---- VIDEOS ----
-  // Set video paths per module (e.g. for album play overlays)
-  videos: {
-    // Example: 'album-0': '/videos/our-moment.mp4',
-  },
+  // Password to bypass countdown (click skip icon top-right)
+  skipPassword: 'skip',
+
+  // ---- Phase 1: countdown typing messages ----
+  countdownMessages: [
+    'Something wonderful is just around the corner…',
+    'The best moments are worth the wait…',
+    'Good things come to those who wait patiently…',
+    'Every second brings us closer to something magical…',
+    'Counting down to a moment that will last forever…',
+    'Anticipation makes the heart grow fonder…',
+    'Soon, very soon, the wait will all be worth it…',
+    'The countdown has begun for something truly special…',
+  ],
+
+  // ---- Phase 2: intro + love quotes ----
+  // {name} will be replaced with recipientName
+  heyText: 'Hey, {name}… I\'ve been waiting for this moment.',
+
+  loveQuotes: [
+    'From the first time I saw you, I knew my world had changed forever.',
+    'You are the calm in my chaos, the light in my darkest days.',
+    'I promise to stand by your side — through every storm, through every sunrise.',
+    'Even when we grow old and gray, I will still look at you the same way I do now.',
+    'You don\'t just have my heart — you are my heart.',
+    'No matter where life takes us, my hand will always reach for yours.',
+  ],
+
+  afterQuotes: [
+    'And today… is all about you.',
+    'Because you deserve the entire world.',
+    'So here it is — a little something I built just for you.',
+  ],
+
+  // ---- Phase 3: birthday celebration ----
+  // {name} will be replaced
+  birthdayTitle: 'Happy Birthday, {name}! 🎂',
+  birthdayMessage: 'May every wish you make today come true. May this year bring you more joy than your heart can hold. Thank you for simply existing — you make this world infinitely more beautiful. I love you, today and always.',
+
+  ctaText: '🎉 Let\'s Celebrate!',
 };
 
 // ============================================================
@@ -44,13 +82,8 @@ export const ASSETS = {
 // ============================================================
 export const CONFIG = {
   password: 'love',
-  countdownTarget: (() => {
-    const now = new Date();
-    const year = now.getMonth() > 5 || (now.getMonth() === 5 && now.getDate() > 27) ? now.getFullYear() + 1 : now.getFullYear();
-    return new Date(year, 5, 27, 0, 0, 0);
-  })(),
+  countdownTarget: LANDING.countdownTarget,
 
-  // ---------- SURPRISE BOX items ----------
   surprises: [
     { icon: '💖', title: 'Heartfelt', body: 'You are the most beautiful part of my ordinary days.' },
     { icon: '✨', title: 'Shine Bright', body: 'Never forget how amazing you are. You light up every room.' },
@@ -64,7 +97,6 @@ export const CONFIG = {
     { icon: '🍀', title: 'Lucky', body: 'I am the luckiest person because I have you.' },
   ],
 
-  // ---------- DAILY LOVE NOTES (27) ----------
   dailyNotes: [
     'You are my sunshine on cloudy days.',
     'Your laugh is the sweetest melody.',
@@ -95,7 +127,6 @@ export const CONFIG = {
     'Happy birthday, my love. This note is just for you.',
   ],
 
-  // ---------- RANDOM CHAT BUBBLES ----------
   chatBubbles: [
     'You\'re amazing, you know that? 💕',
     'Psst… you\'re my favorite person ✨',
@@ -109,41 +140,14 @@ export const CONFIG = {
     'You are my sunshine ☀️',
   ],
 
-  // ---------- STORIES (5) ----------
   stories: [
-    {
-      quote: 'Some memories are small, but somehow they stay forever.',
-      hidden: 'Like the way you laugh at things that aren\'t even that funny. It\'s my favorite sound.',
-      tag: '✨ forever',
-      emoji: '💭',
-    },
-    {
-      quote: 'You have this funny way of making ordinary days feel special.',
-      hidden: 'A random Tuesday with you feels like a holiday. How do you do that?',
-      tag: '🌸 everyday magic',
-      emoji: '✨',
-    },
-    {
-      quote: 'This is one of my favorite versions of us.',
-      hidden: 'The one where we\'re sitting in silence but somehow still talking. That one.',
-      tag: '💕 us',
-      emoji: '💖',
-    },
-    {
-      quote: 'I hope today feels as warm as the happiness you give me.',
-      hidden: 'Because you deserve every bit of warmth, every single day.',
-      tag: '🎂 birthday feels',
-      emoji: '☀️',
-    },
-    {
-      quote: 'You\'re the protagonist of my favorite story.',
-      hidden: 'And I\'d read it a thousand times, just to get to the part where you smile.',
-      tag: '📖 our story',
-      emoji: '💫',
-    },
+    { quote: 'Some memories are small, but somehow they stay forever.', hidden: 'Like the way you laugh at things that aren\'t even that funny. It\'s my favorite sound.', tag: '✨ forever', emoji: '💭' },
+    { quote: 'You have this funny way of making ordinary days feel special.', hidden: 'A random Tuesday with you feels like a holiday. How do you do that?', tag: '🌸 everyday magic', emoji: '✨' },
+    { quote: 'This is one of my favorite versions of us.', hidden: 'The one where we\'re sitting in silence but somehow still talking. That one.', tag: '💕 us', emoji: '💖' },
+    { quote: 'I hope today feels as warm as the happiness you give me.', hidden: 'Because you deserve every bit of warmth, every single day.', tag: '🎂 birthday feels', emoji: '☀️' },
+    { quote: 'You\'re the protagonist of my favorite story.', hidden: 'And I\'d read it a thousand times, just to get to the part where you smile.', tag: '📖 our story', emoji: '💫' },
   ],
 
-  // ---------- ALBUM FRAMES ----------
   albumFrames: [
     { size: 'md', tilt: 'tilt-left', emoji: '🌅', caption: 'golden hour', label: 'us, somewhere' },
     { size: 'sm', tilt: 'tilt-right', emoji: '🌸', caption: 'bloom', label: 'spring' },
@@ -155,7 +159,6 @@ export const CONFIG = {
     { size: 'sm', tilt: 'tilt-left', emoji: '📸', caption: 'candid', label: 'real smile' },
   ],
 
-  // ---------- JOURNEY MILESTONES ----------
   journeyMilestones: [
     { icon: '💬', title: 'First Chat', date: 'Sometime, somewhere', quote: 'It started with a simple hello.', gameType: 'pop' },
     { icon: '🤝', title: 'First Meeting', date: 'A day I\'ll never forget', quote: 'You were even more beautiful in person.', gameType: 'drag' },
@@ -166,31 +169,12 @@ export const CONFIG = {
     { icon: '🎂', title: 'Today, Your Birthday', date: 'The main event', quote: 'This whole world is for you.', gameType: 'reveal' },
   ],
 
-  // ---------- POSTCARDS ----------
   postcards: [
-    {
-      emoji: '🌅', caption: 'our sunrise', rot: -4, frontLabel: 'Our sunrise', frontIcon: '🌅',
-      letter: 'Every sunrise with you feels like a new beginning.\n\nThank you for all the mornings you made brighter just by being there.\n\nI love you.',
-    },
-    {
-      emoji: '🌙', caption: 'stargazing', rot: 3, frontLabel: 'Stargazing', frontIcon: '🌙',
-      letter: 'Under the same sky, we shared a million stars.\n\nSome nights we talked, some we just sat in silence — but every moment was magic.\n\nYou are my favorite constellation.',
-    },
-    {
-      emoji: '☕', caption: 'coffee dates', rot: -2, frontLabel: 'Coffee dates', frontIcon: '☕',
-      letter: 'Coffee never tasted as good as when I\'m with you.\n\nThose quiet afternoons, the laughter, the way you steal my drink…\n\nI\'d choose those moments forever.',
-    },
-    {
-      emoji: '📚', caption: 'quiet moments', rot: 5, frontLabel: 'Quiet moments', frontIcon: '📚',
-      letter: 'In the quiet, I notice everything about you.\n\nThe way you hum when you read, the little smile when you\'re lost in a page.\n\nThose are the moments I treasure most.',
-    },
-    {
-      emoji: '🌸', caption: 'spring walks', rot: -3, frontLabel: 'Spring walks', frontIcon: '🌸',
-      letter: 'Walking beside you, the world felt softer.\n\nCherry blossoms, warm breeze, your hand in mine.\n\nEvery step was a memory I want to keep forever.',
-    },
-    {
-      emoji: '🎵', caption: 'our playlist', rot: 2, frontLabel: 'Our playlist', frontIcon: '🎵',
-      letter: 'Every song reminds me of a moment with you.\n\nSome make me laugh, some make me tear up.\n\nBut all of them are ours. Thank you for the music we created together.',
-    },
+    { emoji: '🌅', caption: 'our sunrise', rot: -4, frontLabel: 'Our sunrise', frontIcon: '🌅', letter: 'Every sunrise with you feels like a new beginning.\n\nThank you for all the mornings you made brighter just by being there.\n\nI love you.' },
+    { emoji: '🌙', caption: 'stargazing', rot: 3, frontLabel: 'Stargazing', frontIcon: '🌙', letter: 'Under the same sky, we shared a million stars.\n\nSome nights we talked, some we just sat in silence — but every moment was magic.\n\nYou are my favorite constellation.' },
+    { emoji: '☕', caption: 'coffee dates', rot: -2, frontLabel: 'Coffee dates', frontIcon: '☕', letter: 'Coffee never tasted as good as when I\'m with you.\n\nThose quiet afternoons, the laughter, the way you steal my drink…\n\nI\'d choose those moments forever.' },
+    { emoji: '📚', caption: 'quiet moments', rot: 5, frontLabel: 'Quiet moments', frontIcon: '📚', letter: 'In the quiet, I notice everything about you.\n\nThe way you hum when you read, the little smile when you\'re lost in a page.\n\nThose are the moments I treasure most.' },
+    { emoji: '🌸', caption: 'spring walks', rot: -3, frontLabel: 'Spring walks', frontIcon: '🌸', letter: 'Walking beside you, the world felt softer.\n\nCherry blossoms, warm breeze, your hand in mine.\n\nEvery step was a memory I want to keep forever.' },
+    { emoji: '🎵', caption: 'our playlist', rot: 2, frontLabel: 'Our playlist', frontIcon: '🎵', letter: 'Every song reminds me of a moment with you.\n\nSome make me laugh, some make me tear up.\n\nBut all of them are ours. Thank you for the music we created together.' },
   ],
 };

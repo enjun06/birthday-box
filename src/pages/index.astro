@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Landing from '../components/screens/Landing.astro';
 import Menu from '../components/screens/Menu.astro';
 import Stories from '../components/screens/Stories.astro';
 import Album from '../components/screens/Album.astro';
@@ -17,13 +18,9 @@ import ConfettiCanvas from '../components/shared/ConfettiCanvas.astro';
 ---
 
 <BaseLayout>
-  <!-- animated background -->
   <div class="bg-anim"></div>
-
-  <!-- floating particles -->
   <div class="particles" id="particles"></div>
 
-  <!-- floating shapes -->
   <div class="float-shape" style="top:10%;left:5%;animation-delay:0s;">✦</div>
   <div class="float-shape" style="top:25%;right:10%;animation-delay:3s;">♥</div>
   <div class="float-shape" style="top:55%;left:8%;animation-delay:5s;">★</div>
@@ -36,6 +33,7 @@ import ConfettiCanvas from '../components/shared/ConfettiCanvas.astro';
   <SurpriseOverlay />
   <ConfettiCanvas />
 
+  <Landing />
   <Menu />
   <Stories />
   <Album />

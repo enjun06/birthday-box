@@ -1,36 +1,31 @@
 ---
 ---
 
-<div id="screen-menu" class="screen active">
+<div id="screen-menu" class="screen">
   <div class="menu-header">
     <div class="deco-hearts">♡ ✦ ♥ ✦ ♡</div>
     <h1>Birthday<br/>Surprise Box</h1>
     <p>✦ tap to explore ✦</p>
-    <div class="countdown-wrap" id="countdown-wrap">
-      <div class="countdown-item"><div class="num" id="cd-days">--</div><div class="label">days</div></div>
-      <div class="countdown-item"><div class="num" id="cd-hours">--</div><div class="label">hrs</div></div>
-      <div class="countdown-item"><div class="num" id="cd-mins">--</div><div class="label">min</div></div>
-      <div class="countdown-item"><div class="num" id="cd-secs">--</div><div class="label">sec</div></div>
-    </div>
   </div>
   <div class="bento-grid" id="bento-grid">
+    <!-- 1: Replay (new) -->
+    <div class="bento-card" data-section="replay">
+      <div class="sparkle-glow"></div>
+      <span class="card-icon">🔄</span>
+      <span class="card-label">Replay Story</span>
+      <span class="card-sub">experience it again</span>
+      <span class="card-deco">💫</span>
+    </div>
+    <!-- 2: Stories -->
     <div class="bento-card" data-section="stories">
       <div class="sparkle-glow"></div>
       <span class="card-icon">💬</span>
       <span class="card-label">Stories</span>
       <span class="card-sub">sweet moments</span>
       <span class="card-deco">📖</span>
-      <span class="float-bubble" style="top:10%;right:12%;animation-delay:0.2s;">💭</span>
       <span class="float-bubble" style="bottom:15%;left:8%;animation-delay:1s;">💬</span>
     </div>
-    <div class="bento-card" data-section="album">
-      <div class="sparkle-glow"></div>
-      <span class="card-icon">🖼️</span>
-      <span class="card-label">Album</span>
-      <span class="card-sub">memory exhibition</span>
-      <span class="card-deco">🎨</span>
-      <span class="float-bubble" style="bottom:20%;right:10%;animation-delay:0.6s;">📸</span>
-    </div>
+    <!-- 3: Journey (full-width, horizontal) -->
     <div class="bento-card" data-section="journey">
       <div class="sparkle-glow"></div>
       <span class="card-icon">🗺️</span>
@@ -42,6 +37,16 @@
       <span class="float-bubble" style="top:15%;left:20%;animation-delay:0.8s;">📍</span>
       <span class="float-bubble" style="bottom:10%;right:18%;animation-delay:1.4s;">❤️</span>
     </div>
+    <!-- 4: Album -->
+    <div class="bento-card" data-section="album">
+      <div class="sparkle-glow"></div>
+      <span class="card-icon">🖼️</span>
+      <span class="card-label">Album</span>
+      <span class="card-sub">memory exhibition</span>
+      <span class="card-deco">🎨</span>
+      <span class="float-bubble" style="bottom:20%;right:10%;animation-delay:0.6s;">📸</span>
+    </div>
+    <!-- 5: Postcard -->
     <div class="bento-card" data-section="postcard">
       <div class="sparkle-glow"></div>
       <span class="card-icon">💌</span>
@@ -50,6 +55,7 @@
       <span class="card-deco">✉️</span>
       <span class="float-bubble" style="top:12%;left:10%;animation-delay:1.1s;">💕</span>
     </div>
+    <!-- 6: Secret -->
     <div class="bento-card" data-section="secret">
       <div class="sparkle-glow"></div>
       <span class="card-icon">🔐</span>
@@ -58,6 +64,7 @@
       <span class="card-deco">✨</span>
       <span class="float-bubble" style="bottom:18%;right:8%;animation-delay:0.4s;">🔑</span>
     </div>
+    <!-- 7: Surprise -->
     <div class="bento-card" data-section="surprise">
       <div class="sparkle-glow"></div>
       <span class="card-icon">🎁</span>
@@ -65,6 +72,7 @@
       <span class="card-sub">random treats</span>
       <span class="card-deco">🎊</span>
     </div>
+    <!-- 8: Daily -->
     <div class="bento-card" data-section="daily">
       <div class="sparkle-glow"></div>
       <span class="card-icon">📅</span>
@@ -72,6 +80,7 @@
       <span class="card-sub">27 days of love</span>
       <span class="card-deco">💕</span>
     </div>
+    <!-- 9: Wish (full-width, horizontal) -->
     <div class="bento-card" data-section="wish">
       <div class="sparkle-glow"></div>
       <span class="card-icon">⭐</span>

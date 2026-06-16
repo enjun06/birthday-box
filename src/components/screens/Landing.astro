@@ -1,0 +1,64 @@
+---
+---
+
+<div id="screen-landing" class="screen active">
+  <div class="landing-bg" id="landing-bg"></div>
+  <canvas id="hearts-canvas"></canvas>
+
+  <!-- skip countdown button (top-right) -->
+  <button class="landing-skip" id="landing-skip" title="Skip countdown">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+  </button>
+
+  <!-- skip password modal -->
+  <div class="skip-overlay" id="skip-overlay">
+    <div class="skip-modal">
+      <div class="skip-modal-icon">🔑</div>
+      <div class="skip-modal-title">Skip Countdown</div>
+      <input class="skip-modal-input" id="skip-password-input" type="password" placeholder="Enter password…" autocomplete="off" />
+      <div class="skip-modal-actions">
+        <button class="skip-modal-btn skip-modal-cancel" id="skip-cancel">Cancel</button>
+        <button class="skip-modal-btn skip-modal-confirm" id="skip-confirm">Unlock</button>
+      </div>
+      <div class="skip-modal-error" id="skip-error">Wrong password, try again.</div>
+    </div>
+  </div>
+
+  <!-- Phase 1: Countdown -->
+  <div class="landing-phase" id="phase-countdown">
+    <div class="landing-center">
+      <div class="landing-typing" id="landing-typing-1">
+        <div class="type-target" id="countdown-type-target"></div>
+      </div>
+      <div class="landing-countdown" id="landing-countdown">
+        <div class="lc-item"><div class="lc-num" id="lcd-days">--</div><div class="lc-label">days</div></div>
+        <div class="lc-item"><div class="lc-num" id="lcd-hours">--</div><div class="lc-label">hrs</div></div>
+        <div class="lc-item"><div class="lc-num" id="lcd-mins">--</div><div class="lc-label">min</div></div>
+        <div class="lc-item"><div class="lc-num" id="lcd-secs">--</div><div class="lc-label">sec</div></div>
+      </div>
+      <button class="landing-btn" id="landing-enter-btn" style="display:none">✨ Enter</button>
+    </div>
+  </div>
+
+  <!-- Phase 2: Intro + Love Quotes (full-screen typing) -->
+  <div class="landing-phase" id="phase-intro" style="display:none">
+    <div class="intro-center">
+      <div class="landing-typing intro-hey" id="landing-typing-2">
+        <div class="type-target" id="hey-type-target"></div>
+      </div>
+      <div class="landing-typing intro-quote" id="landing-typing-3" style="display:none">
+        <div class="type-target" id="quote-type-target"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3: Birthday Celebration -->
+  <div class="landing-phase" id="phase-birthday" style="display:none">
+    <div class="birthday-center">
+      <div class="birthday-title" id="birthday-title"></div>
+      <div class="birthday-name" id="birthday-name"></div>
+      <div class="birthday-msg typing-wish" id="birthday-msg-target"></div>
+      <button class="landing-btn landing-btn-cta" id="landing-cta-btn" style="display:none">🎉 Let's Celebrate!</button>
+    </div>
+  </div>
+</div>
