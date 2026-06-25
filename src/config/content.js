@@ -4,18 +4,18 @@
 
 export const ASSETS = {
   music: {
-    menu: { label: 'Menu Theme — Lofi Piano', src: null },
-    stories: { label: 'Stories — Soft Strings', src: null },
-    album: { label: 'Album — Nostalgic Guitar', src: null },
-    journey: { label: 'Journey — Cinematic Ambient', src: null },
-    postcard: { label: 'Postcard — Acoustic Love', src: null },
-    secret: { label: 'Secret — Mysterious Piano', src: null },
-    surprise: { label: 'Surprise — Playful Ukulele', src: null },
-    daily: { label: 'Daily — Gentle Harp', src: null },
-    wish: { label: 'Wish — Dreamy Synth', src: null },
-    ending: { label: 'Ending — Emotional Crescendo', src: null },
-    landing: { label: 'Landing — Anticipation', src: null },
-    cake: { label: 'Cake — Candlelight', src: null },
+    menu: { label: 'Menu Theme — Lofi Piano', src: '/music/menu.mp3' },
+    stories: { label: 'Stories — Soft Strings', src: '/music/stories.mp3' },
+    album: { label: 'Album — Nostalgic Guitar', src: '/music/album.mp3' },
+    journey: { label: 'Journey — Cinematic Ambient', src: '/music/journey.mp3' },
+    postcard: { label: 'Postcard — Acoustic Love', src: '/music/postcard.mp3' },
+    secret: { label: 'Secret — Mysterious Piano', src: '/music/secret.mp3' },
+    surprise: { label: 'Surprise — Playful Ukulele', src: '/music/surprise.mp3' },
+    daily: { label: 'Daily — Gentle Harp', src: '/music/daily.mp3' },
+    wish: { label: 'Wish — Dreamy Synth', src: '/music/wish.mp3' },
+    ending: { label: 'Ending — Emotional Crescendo', src: '/music/ending.mp3' },
+    landing: { label: 'Landing — Anticipation', src: '/music/landing.mp3' },
+    cake: { label: 'Cake — Candlelight', src: '/music/cake.mp3' },
   },
   albumImages: {},
   secretImages: {},
@@ -72,7 +72,7 @@ export const LANDING = {
 
   // ---- Phase 3: birthday celebration ----
   // {name} will be replaced
-  birthdayTitle: 'Happy Birthday, {name}! 🎂',
+  birthdayTitle: 'Happy Birthday, Brilianti Neisa! 🎂',
   birthdayMessage: 'May every wish you make today come true. May this year bring you more joy than your heart can hold. Thank you for simply existing — you make this world infinitely more beautiful. I love you, today and always.',
 
   ctaText: '🎉 Let\'s Celebrate!',
@@ -157,18 +157,18 @@ export const CONFIG = {
   ],
 
   stories: [
-    { quote: 'Some memories are small, but somehow they stay forever.', hidden: 'Like the way you laugh at things that aren\'t even that funny. It\'s my favorite sound.', tag: '✨ forever', emoji: '💭' },
-    { quote: 'You have this funny way of making ordinary days feel special.', hidden: 'A random Tuesday with you feels like a holiday. How do you do that?', tag: '🌸 everyday magic', emoji: '✨' },
-    { quote: 'This is one of my favorite versions of us.', hidden: 'The one where we\'re sitting in silence but somehow still talking. That one.', tag: '💕 us', emoji: '💖' },
-    { quote: 'I hope today feels as warm as the happiness you give me.', hidden: 'Because you deserve every bit of warmth, every single day.', tag: '🎂 birthday feels', emoji: '☀️' },
-    { quote: 'You\'re the protagonist of my favorite story.', hidden: 'And I\'d read it a thousand times, just to get to the part where you smile.', tag: '📖 our story', emoji: '💫' },
+    { quote: 'Some memories are small, but somehow they stay forever.', hidden: 'Like the way you laugh at things that aren\'t even that funny. It\'s my favorite sound.', tag: '✨ forever', emoji: '💭', bg: '/images/5.PNG' },
+    { quote: 'You have this funny way of making ordinary days feel special.', hidden: 'A random Tuesday with you feels like a holiday. How do you do that?', tag: '🌸 everyday magic', emoji: '✨', bg: '/images/5.PNG' },
+    { quote: 'This is one of my favorite versions of us.', hidden: 'The one where we\'re sitting in silence but somehow still talking. That one.', tag: '💕 us', emoji: '💖', bg: '/images/5.PNG' },
+    { quote: 'I hope today feels as warm as the happiness you give me.', hidden: 'Because you deserve every bit of warmth, every single day.', tag: '🎂 birthday feels', emoji: '☀️', bg: '/images/5.PNG' },
+    { quote: 'You\'re the protagonist of my favorite story.', hidden: 'And I\'d read it a thousand times, just to get to the part where you smile.', tag: '📖 our story', emoji: '💫', bg: '/images/5.PNG' },
   ],
 
   albumFrames: [
-    { size: 'md', tilt: 'tilt-left', emoji: '🌅', caption: 'golden hour', label: 'us, somewhere' },
-    { size: 'sm', tilt: 'tilt-right', emoji: '🌸', caption: 'bloom', label: 'spring' },
-    { size: 'sm', tilt: 'tilt-left', emoji: '☕', caption: 'cozy', label: 'morning' },
-    { size: 'lg', tilt: '', emoji: '🌊', caption: 'endless', label: 'our summer' },
+    { size: 'md', tilt: 'tilt-left', caption: 'golden hour', label: 'us, somewhere', img: '/images/1.jpg' },
+    { size: 'sm', tilt: 'tilt-right', caption: 'bloom', label: 'spring', img: '/images/2.jpg' },
+    { size: 'sm', tilt: 'tilt-left', caption: 'cozy', label: 'morning', img: '/images/3.JPG' },
+    { size: 'lg', tilt: '', caption: 'endless', label: 'our summer', img: '/images/4.JPG' },
     { size: 'sm', tilt: 'tilt-right', emoji: '🎵', caption: 'our song', label: 'playlist' },
     { size: 'md', tilt: 'tilt-left', emoji: '✨', caption: 'magic', label: 'that night' },
     { size: 'sm', tilt: 'tilt-right', emoji: '🍜', caption: 'comfort', label: 'late night' },
