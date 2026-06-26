@@ -83,10 +83,11 @@ function updateMusicLabel(screenId) {
 // INTRO AUDIO
 // ============================================================
 let introAudio = null;
+let menuAudio = null;
 
 function playIntroMusic() {
   if (introAudio) { introAudio.pause(); introAudio = null; }
-  introAudio = new Audio('/music/1.mp3');
+  introAudio = new Audio('/music/2.mp3');
   introAudio.loop = true;
   introAudio.volume = 0.5;
   introAudio.play().catch(() => {});
@@ -97,6 +98,15 @@ function stopIntroMusic() {
     introAudio.pause();
     introAudio = null;
   }
+}
+
+function playMenuMusic() {
+  stopIntroMusic();
+  if (menuAudio) return;
+  menuAudio = new Audio('/music/1.mp3');
+  menuAudio.loop = true;
+  menuAudio.volume = 0.3;
+  menuAudio.play().catch(() => {});
 }
 
 // ============================================================
@@ -407,7 +417,7 @@ function initLanding() {
 
   // CTA button (phase 3 -> menu)
   document.getElementById('landing-cta-btn').onclick = () => {
-    stopIntroMusic();
+    playMenuMusic();
     gsap.to('#screen-landing', { opacity: 0, duration: 0.6, onComplete: () => {
       document.getElementById('screen-landing').classList.remove('active');
       document.getElementById('screen-landing').style.opacity = '';
@@ -884,7 +894,8 @@ function updateJourney(idx) {
   const tiles=document.querySelectorAll('.journey-tile');
   tiles.forEach((t,i)=>{t.classList.toggle('active-tile',i===idx);gsap.to(t,{scale:i===idx?1.02:1,duration:0.3,ease:'back.out(2)',force3D:true});});
   const at=tiles[idx];
-  if(at){const o=at.offsetTop+at.offsetHeight/2;const mk=document.getElementById('journey-marker');gsap.to(mk,{top:o-16,duration:0.5,ease:'power3.out',overwrite:'auto'});gsap.to(mk,{scale:1.3,duration:0.3,ease:'back.out(3)',yoyo:true,repeat:1});}
+  if(at){const o=at.offsetTop+at.offsetHeight/2;const mk=document.getElementById('journey-marker');gsap.to(mk,{top:o-16,duration:0.5,ease:'power3.out',overwrite:'auto'});gsap.to(mk,{scale:1.3,duration:0.3,ease:'back.out(3)',yoyo:true,repeat:1});
+  at.scrollIntoView({behavior:'smooth',block:'center'});}
   document.getElementById('journey-prev').disabled=idx===0;
   const nb=document.getElementById('journey-next');nb.disabled=idx===CONFIG.journeyMilestones.length-1;nb.textContent=idx===CONFIG.journeyMilestones.length-1?'🎉 Celebrate!':'Next Step →';
   initMiniGame(idx);
@@ -1000,10 +1011,16 @@ function openGalleryPopup(src) {
   const popup = document.getElementById('gallery-popup');
   const img = document.getElementById('gallery-popup-img');
   const content = document.getElementById('gallery-popup-content');
-  img.src = src;
   popup.style.display = 'flex';
-  gsap.fromTo(popup, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: 'power2.out' });
-  gsap.fromTo(content, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(1.7)' });
+  gsap.set(popup, { opacity: 0, force3D: true });
+  gsap.set(content, { opacity: 0, scale: 0.6, force3D: true });
+  const animate = function() {
+    gsap.to(popup, { opacity: 1, duration: 0.15, ease: 'power2.out', force3D: true });
+    gsap.to(content, { opacity: 1, scale: 1, duration: 0.25, ease: 'back.out(1.7)', force3D: true });
+  };
+  img.onload = animate;
+  if (img.complete && img.naturalWidth) animate();
+  img.src = src;
 }
 
 function closeGalleryPopup() {
