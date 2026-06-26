@@ -27,7 +27,7 @@ export const ASSETS = {
 // ============================================================
 export const LANDING = {
   // The recipient's name — change this before deploying
-  recipientName: 'Ana',
+  recipientName: 'Brilianti Neisa',
 
   // Countdown target (month is 0-indexed: 5 = June)
   countdownTarget: (() => {
