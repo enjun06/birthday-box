@@ -377,6 +377,70 @@ html, body {
 .scratch-frame .scratch-reveal .reveal-quote .highlight { color: var(--pink); font-weight: 700; }
 .scratch-progress { text-align: center; font-size: 13px; color: #7a5a7c; margin-top: 8px; }
 
+.playlist-section { max-width: 480px; margin: 24px auto 0; }
+.playlist-section .playlist-title { font-family: var(--font-hand); font-size: 20px; color: #7a5a7c; text-align: center; margin-bottom: 10px; }
+.playlist-section .playlist-embed {
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 8px;
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.playlist-section .playlist-embed iframe { display: block; }
+
+.gallery-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.gallery-popup .gallery-popup-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+}
+.gallery-popup .gallery-popup-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+  background: #fff;
+  padding: 6px;
+}
+.gallery-popup .gallery-popup-content .gallery-popup-img {
+  display: block;
+  max-width: 85vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 12px;
+}
+.gallery-popup .gallery-popup-content .gallery-popup-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s;
+  z-index: 10;
+}
+.gallery-popup .gallery-popup-content .gallery-popup-close:active {
+  transform: scale(0.9);
+}
+
 #screen-ending { background: linear-gradient(135deg,#2d1b2e,#4a2b4a,#1a1a2e); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 24px; color: #fff; }
 #screen-ending .ending-title { font-family: var(--font-display); font-size: clamp(32px,7vw,56px); font-weight: 600; margin-bottom: 16px; }
 #screen-ending .ending-sub { font-family: var(--font-hand); font-size: clamp(18px,3.5vw,24px); opacity: 0.7; max-width: 400px; line-height: 1.6; }

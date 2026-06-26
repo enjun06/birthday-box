@@ -79,6 +79,26 @@ function updateMusicLabel(screenId) {
 }
 
 // ============================================================
+// INTRO AUDIO
+// ============================================================
+let introAudio = null;
+
+function playIntroMusic() {
+  if (introAudio) { introAudio.pause(); introAudio = null; }
+  introAudio = new Audio('/music/1.mp3');
+  introAudio.loop = true;
+  introAudio.volume = 0.5;
+  introAudio.play().catch(() => {});
+}
+
+function stopIntroMusic() {
+  if (introAudio) {
+    introAudio.pause();
+    introAudio = null;
+  }
+}
+
+// ============================================================
 // CONFETTI
 // ============================================================
 function initConfettiCanvas() {
@@ -324,6 +344,7 @@ function initLanding() {
   cycleCountdownMessages();
   landingMsgInterval = setInterval(cycleCountdownMessages, 5000);
   updateLandingCountdown();
+  playIntroMusic();
 
   const countdownInterval = setInterval(() => {
     updateLandingCountdown();
@@ -385,6 +406,7 @@ function initLanding() {
 
   // CTA button (phase 3 -> menu)
   document.getElementById('landing-cta-btn').onclick = () => {
+    stopIntroMusic();
     gsap.to('#screen-landing', { opacity: 0, duration: 0.6, onComplete: () => {
       document.getElementById('screen-landing').classList.remove('active');
       document.getElementById('screen-landing').style.opacity = '';
@@ -944,10 +966,38 @@ function populateSecretGallery() {
     else { fl.textContent = items[i].val; }
     f.appendChild(fl);
     if (i%3===0) { const t = document.createElement('div'); t.className = 'tape'; f.appendChild(t); }
-    f.addEventListener('click', function () { gsap.to(this, { scale: 1.15, duration: 0.3, ease: 'back.out(2)', onComplete: function () { gsap.to(this, { scale: 1, duration: 0.2, ease: 'power2.out' }); } }); const r = this.getBoundingClientRect(); launchConfetti(20, { spread: 60, origin: { x: (r.left+r.width/2)/window.innerWidth, y: (r.top+r.height/2)/window.innerHeight } }); });
+    f.addEventListener('click', function () {
+      const img = this.querySelector('.frame-fill img');
+      if (img) {
+        openGalleryPopup(img.src);
+      } else {
+        gsap.to(this, { scale: 1.15, duration: 0.3, ease: 'back.out(2)', onComplete: function () { gsap.to(this, { scale: 1, duration: 0.2, ease: 'power2.out' }); } });
+        const r = this.getBoundingClientRect();
+        launchConfetti(20, { spread: 60, origin: { x: (r.left+r.width/2)/window.innerWidth, y: (r.top+r.height/2)/window.innerHeight } });
+      }
+    });
     s.appendChild(f);
   }
   gsap.fromTo('.scatter-frame',{opacity:0,scale:0.7,rotation:10,force3D:true},{opacity:1,scale:1,rotation:0,duration:0.4,stagger:0.03,ease:'back.out(1.7)',force3D:true});
+}
+
+function openGalleryPopup(src) {
+  const popup = document.getElementById('gallery-popup');
+  const img = document.getElementById('gallery-popup-img');
+  const content = document.getElementById('gallery-popup-content');
+  img.src = src;
+  popup.style.display = 'flex';
+  gsap.fromTo(popup, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: 'power2.out' });
+  gsap.fromTo(content, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(1.7)' });
+}
+
+function closeGalleryPopup() {
+  const popup = document.getElementById('gallery-popup');
+  const content = document.getElementById('gallery-popup-content');
+  gsap.to(content, { opacity: 0, scale: 0.6, duration: 0.2, ease: 'power2.in' });
+  gsap.to(popup, { opacity: 0, duration: 0.2, ease: 'power2.in', onComplete: function () {
+    popup.style.display = 'none';
+  }});
 }
 
 function initScratch() {
@@ -1145,5 +1195,7 @@ document.getElementById('musicPlayer').addEventListener('click', function () {
 });
 document.getElementById('surpriseClose').addEventListener('click', function () { document.getElementById('surpriseOverlay').classList.remove('open'); });
 document.getElementById('surpriseOverlay').addEventListener('click', function (e) { if (e.target === this) this.classList.remove('open'); });
+document.getElementById('gallery-popup-close').addEventListener('click', closeGalleryPopup);
+document.getElementById('gallery-popup-backdrop').addEventListener('click', closeGalleryPopup);
 
 console.log('✦ Happy Birthday — made with love ✦');
