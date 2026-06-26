@@ -299,6 +299,7 @@ html, body {
 .album-frame.lg { width: 100%; }
 .album-frame.tilt-left { transform: rotate(-1.5deg); }
 .album-frame.tilt-right { transform: rotate(1.5deg); }
+.album-frame .frame-img-playlist { aspect-ratio: auto; padding: 8px; background: linear-gradient(135deg,#fce4ec,#e8e0f0); }
 .album-spotlight { position: fixed; pointer-events: none; z-index: 0; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(255,107,157,0.1) 0%, transparent 70%); transform: translate(-50%,-50%); transition: opacity 0.3s; }
 
 #screen-journey { background: linear-gradient(180deg,#fff8e1,#f0f8ff,#fef6f9); padding: 70px 16px 80px; }

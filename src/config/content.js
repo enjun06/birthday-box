@@ -170,9 +170,6 @@ export const CONFIG = {
     { size: 'sm', tilt: 'tilt-left', caption: 'cozy', label: 'morning', img: '/images/3.JPG' },
     { size: 'lg', tilt: '', caption: 'endless', label: 'our summer', img: '/images/4.JPG' },
     { size: 'sm', tilt: 'tilt-right', emoji: '🎵', caption: 'our song', label: 'playlist' },
-    { size: 'md', tilt: 'tilt-left', emoji: '✨', caption: 'magic', label: 'that night' },
-    { size: 'sm', tilt: 'tilt-right', emoji: '🍜', caption: 'comfort', label: 'late night' },
-    { size: 'sm', tilt: 'tilt-left', emoji: '📸', caption: 'candid', label: 'real smile' },
   ],
 
   journeyMilestones: [

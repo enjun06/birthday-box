@@ -34,6 +34,14 @@ import ConfettiCanvas from '../components/shared/ConfettiCanvas.astro';
   <SurpriseOverlay />
   <ConfettiCanvas />
 
+  <div class="gallery-popup" id="gallery-popup">
+    <div class="gallery-popup-backdrop" id="gallery-popup-backdrop"></div>
+    <div class="gallery-popup-content" id="gallery-popup-content">
+      <button class="gallery-popup-close" id="gallery-popup-close">✕</button>
+      <img class="gallery-popup-img" id="gallery-popup-img" alt="" />
+    </div>
+  </div>
+
   <Landing />
   <Menu />
   <Stories />

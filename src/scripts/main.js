@@ -1,8 +1,9 @@
 import { gsap } from 'gsap';
+import { CSSPlugin } from 'gsap/CSSPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CONFIG, ASSETS, LANDING } from '../config/content.js';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(CSSPlugin, ScrollTrigger);
 
 // ============================================================
 // STATE
@@ -344,7 +345,6 @@ function initLanding() {
   cycleCountdownMessages();
   landingMsgInterval = setInterval(cycleCountdownMessages, 5000);
   updateLandingCountdown();
-  playIntroMusic();
 
   const countdownInterval = setInterval(() => {
     updateLandingCountdown();
@@ -398,6 +398,7 @@ function initLanding() {
     if (!landingCountdownOver) return;
     skipOverlay.classList.remove('open');
     document.getElementById('landing-skip').style.display = 'none';
+    playIntroMusic();
     gsap.to('#phase-countdown', { opacity: 0, duration: 0.5, onComplete: () => {
       document.getElementById('phase-countdown').style.display = 'none';
       startIntroPhase();
@@ -814,20 +815,34 @@ function initAlbum() {
   document.addEventListener('touchmove',function(e){const t=e.touches[0];spotlight.style.opacity='1';spotlight.style.left=t.clientX+'px';spotlight.style.top=t.clientY+'px';},{passive:true});
   let row=document.createElement('div'); row.className='album-row'; let cnt=0;
   data.forEach((item, idx)=>{
-    const frame=document.createElement('div'); frame.className='album-frame '+item.size+' '+(item.tilt||'');
+    const isPlaylist = item.label === 'playlist';
+    const frame=document.createElement('div'); frame.className='album-frame '+(isPlaylist?'lg':item.size)+' '+(item.tilt||'');
     frame.style.transform+=' rotate('+(Math.random()*3-1.5)+'deg)';
-    const imgDiv=document.createElement('div'); imgDiv.className='frame-img';
-    if (item.img) { const im=document.createElement('img'); im.src=item.img; im.alt=item.caption; im.loading='lazy'; imgDiv.appendChild(im); }
+    const imgDiv=document.createElement('div'); imgDiv.className='frame-img'+(isPlaylist?' frame-img-playlist':'');
+    if (isPlaylist) {
+      const ifr=document.createElement('iframe'); ifr.style.borderRadius='12px'; ifr.src='https://open.spotify.com/embed/playlist/6durrIxUdbjRJ171mwRJtP?utm_source=generator'; ifr.width='100%'; ifr.height='152'; ifr.frameBorder='0'; ifr.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'; ifr.loading='lazy'; imgDiv.appendChild(ifr);
+    } else if (item.img) { const im=document.createElement('img'); im.src=item.img; im.alt=item.caption; im.loading='lazy'; imgDiv.appendChild(im); }
     else { imgDiv.textContent=item.emoji; }
-    if(idx%3===0){const ov=document.createElement('div');ov.className='play-overlay';ov.textContent='▶';imgDiv.appendChild(ov);}
+    if(idx%3===0&&!isPlaylist){const ov=document.createElement('div');ov.className='play-overlay';ov.textContent='▶';imgDiv.appendChild(ov);}
     frame.appendChild(imgDiv);
+    if(!isPlaylist){
     const cap=document.createElement('div');cap.className='frame-caption';cap.textContent=item.caption;frame.appendChild(cap);
     const lb=document.createElement('div');lb.className='frame-label';lb.textContent=item.label;frame.appendChild(lb);
     const tilt={x:0,y:0};
     const u=function(){gsap.set(frame,{rotationX:tilt.y*2,rotationY:tilt.x*2,transformPerspective:800,force3D:true});};
     frame.addEventListener('mousemove',function(e){const r=this.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-0.5,y=(e.clientY-r.top)/r.height-0.5;gsap.to(tilt,{x:x*16,y:-y*16,duration:0.3,ease:'power2.out',onUpdate:u});});
     frame.addEventListener('mouseleave',function(){gsap.to(tilt,{x:0,y:0,duration:0.5,ease:'power2.out',onUpdate:u});});
-    frame.addEventListener('click',function(){gsap.to(this,{scale:1.05,duration:0.3,ease:'back.out(2)',onComplete:function(){gsap.to(this,{scale:1,duration:0.3,ease:'power2.out'});}});const c=this.querySelector('.frame-caption');gsap.fromTo(c,{opacity:0.4},{opacity:1,duration:0.4,ease:'power2.out'});const r=this.getBoundingClientRect();launchConfetti(20,{spread:60,origin:{x:(r.left+r.width/2)/window.innerWidth,y:(r.top+r.height/2)/window.innerHeight}});});
+    frame.addEventListener('click',function(){
+      const img = this.querySelector('.frame-img img');
+      if (img) {
+        openGalleryPopup(img.src);
+      } else {
+        gsap.to(this,{scale:1.05,duration:0.3,ease:'back.out(2)',onComplete:function(){gsap.to(this,{scale:1,duration:0.3,ease:'power2.out'});}});
+      }
+      const c=this.querySelector('.frame-caption');gsap.fromTo(c,{opacity:0.4},{opacity:1,duration:0.4,ease:'power2.out'});
+      const r=this.getBoundingClientRect();launchConfetti(20,{spread:60,origin:{x:(r.left+r.width/2)/window.innerWidth,y:(r.top+r.height/2)/window.innerHeight}});
+    });
+    }
     row.appendChild(frame); cnt++;
     if(cnt>=3||idx===data.length-1){wall.appendChild(row);row=document.createElement('div');row.className='album-row';cnt=0;}
   });
