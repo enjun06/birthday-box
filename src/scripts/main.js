@@ -977,12 +977,6 @@ function populateSecretGallery() {
     { type: 'img', src: '/images/4.JPG' },
     { type: 'img', src: '/images/5.PNG' },
     { type: 'img', src: '/images/6.PNG' },
-    { type: 'emoji', val: '🌸' },
-    { type: 'emoji', val: '🌅' },
-    { type: 'emoji', val: '☕' },
-    { type: 'emoji', val: '🎵' },
-    { type: 'emoji', val: '🌙' },
-    { type: 'emoji', val: '🎂' },
   ];
   const r = [-3,4,-2,5,-4,3,-1,6,-5,2,-3,4];
   for (let i = 0; i < items.length; i++) {
