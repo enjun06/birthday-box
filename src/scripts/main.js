@@ -71,34 +71,11 @@ function startChatBubble() {
 // MUSIC PLAYER
 // ============================================================
 let musicPlaying = false;
-let musicLoaded = false;
 
 function updateMusicLabel(screenId) {
   const track = ASSETS.music[screenId];
   const label = document.getElementById('musicLabel');
   label.textContent = track ? track.label : 'Unknown';
-
-  const audio = document.getElementById('musicAudio');
-  if (!track || !track.src) {
-    audio.pause();
-    audio.removeAttribute('src');
-    musicLoaded = false;
-    return;
-  }
-
-  const currentSrc = audio.getAttribute('src') || '';
-  if (currentSrc !== track.src) {
-    audio.setAttribute('src', track.src);
-    audio.load();
-    musicLoaded = true;
-    audio.play().then(() => {
-      musicPlaying = true;
-      document.getElementById('musicIcon').textContent = '🎵';
-    }).catch(() => {
-      musicPlaying = false;
-      document.getElementById('musicIcon').textContent = '🔇';
-    });
-  }
 }
 
 // ============================================================
@@ -1163,15 +1140,8 @@ document.querySelectorAll('.bento-card').forEach(c => {
 document.getElementById('btn-replay').addEventListener('click', function () { location.reload(); });
 document.getElementById('btn-back-menu').addEventListener('click', function () { showScreen('menu'); gsap.fromTo('.bento-card', { opacity: 0, y: 20, force3D: true }, { opacity: 1, y: 0, duration: 0.3, stagger: 0.04, ease: 'power2.out', force3D: true }); });
 document.getElementById('musicPlayer').addEventListener('click', function () {
-  const audio = document.getElementById('musicAudio');
-  if (!audio.src) return;
-  if (audio.paused) {
-    audio.play();
-    document.getElementById('musicIcon').textContent = '🎵';
-  } else {
-    audio.pause();
-    document.getElementById('musicIcon').textContent = '🔇';
-  }
+  const track = ASSETS.music[currentScreen];
+  document.getElementById('musicLabel').textContent = track ? track.label : 'Unknown';
 });
 document.getElementById('surpriseClose').addEventListener('click', function () { document.getElementById('surpriseOverlay').classList.remove('open'); });
 document.getElementById('surpriseOverlay').addEventListener('click', function (e) { if (e.target === this) this.classList.remove('open'); });
